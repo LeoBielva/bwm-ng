@@ -17,7 +17,7 @@ import { MapService } from './map.service';
   imports: [
     NgPipesModule,
     AgmCoreModule.forRoot({
-        apiKey: 'GOOGLE_MAPS_API'
+        apiKey: "process.env.GOOGLE_MAPS_API"
     }),
     CommonModule
     ],
