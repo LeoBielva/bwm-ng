@@ -19,6 +19,7 @@
 *.sublime-workspace
 .env
 
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
@@ -35,6 +36,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+.env
 
 # e2e
 /e2e/*.js
@@ -45,3 +47,4 @@ testem.log
 Thumbs.db
 
 /sever/config/dev.js
+/server/.vscode
