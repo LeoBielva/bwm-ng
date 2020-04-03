@@ -2,21 +2,26 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from "@angular/common";
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { LoginComponent } from './login/login.component'
-import { RegisterComponent } from './register/register.component'
+import { RegisterComponent } from './register/register.component';
 
 import { AuthService } from './shared/auth.service'
+import { AuthGuard } from './shared/auth.guard'
+import { TokenInterceptor } from './shared/token.interceptor'
+import { AuthComponent } from './auth.component';
 
 const routes: Routes = [
-    { path:'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent }
+    { path:'login', component: LoginComponent, canActivate: [AuthGuard] },
+    { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] }
 ]
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AuthComponent
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -25,7 +30,13 @@ const routes: Routes = [
     ReactiveFormsModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
 })
 export class AuthModule { }
